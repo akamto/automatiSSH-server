@@ -12,6 +12,8 @@ Todo funciona 100% en el navegador (HTML + CSS + JS). Tus ajustes se guardan en 
 
 **Demo:** https://akamto.github.io/automatiSSH-server/
 
+![Vista previa](og-image.svg)
+
 ## Uso
 
 1. Abre `index.html` en el navegador.
