@@ -1,0 +1,8 @@
+# Fuente de datos local (las 103 directivas ya están en app.js)
+par_metros_de_sshd_config.txt
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
