@@ -1,250 +1,361 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Intents — Pantallas de Ajustes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel FRP · S21 FE</title>
 <style>
-:root{--bg:#0e1116;--card:#171b22;--line:#252b35;--tx:#e6e9ef;--dim:#8b94a3;--acc:#4da3ff;--ok:#37c98a}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,Roboto,"Segoe UI",sans-serif;padding:12px 12px 60px}
-h1{font-size:19px;margin:6px 0 4px}
-.sub{color:var(--dim);font-size:13px;margin-bottom:10px}
-.warn{background:#1b2330;border:1px solid #2c3a4d;border-radius:10px;padding:10px;font-size:13px;color:#c3ccda;margin-bottom:12px}
-.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0 10px;border-bottom:1px solid var(--line);margin-bottom:10px}
-input[type=search]{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:15px}
-#count{font-size:12px;color:var(--dim);margin-top:6px}
-h2{font-size:12.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--acc);margin:22px 0 8px}
-.row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
-.row.done{border-color:var(--ok)}
-.meta{flex:1;min-width:0}
-.lbl{font-weight:600;font-size:14px;display:block}
-.cmp{font:11px/1.3 ui-monospace,Menlo,monospace;color:var(--dim);word-break:break-all;display:block;margin-top:3px}
-a.open{background:var(--acc);color:#04101f;font-weight:700;text-decoration:none;padding:9px 13px;border-radius:9px;font-size:13px;white-space:nowrap}
-button.cp{background:#222a35;color:var(--tx);border:1px solid var(--line);padding:9px 11px;border-radius:9px;font-size:13px;cursor:pointer}
-button.dn{background:none;border:1px solid var(--line);color:var(--dim);padding:9px 10px;border-radius:9px;font-size:13px;cursor:pointer}
-.row.done button.dn{color:var(--ok);border-color:var(--ok)}
+  :root {
+    --bg: #0f1115; --fg: #e7e9ee; --muted: #9aa1ad; --card: #161a21;
+    --border: #262c36; --primary: #3b82f6; --secondary: #1d222b;
+    --ok: #22c55e; --input: #11151b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 18px 16px 40px; background: var(--bg); color: var(--fg);
+    font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.5;
+    max-width: 720px; margin-inline: auto;
+  }
+  .dev { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+  .dev b { font-weight: 500; color: var(--fg); }
+  .note { border-left: 3px solid var(--primary); background: var(--secondary); border-radius: 0 8px 8px 0;
+    padding: 10px 12px; font-size: 13px; margin-bottom: 18px; }
+  h1 { font-size: 18px; font-weight: 500; margin: 0 0 14px; }
+  h2 { font-size: 15px; font-weight: 500; margin: 24px 0 4px; }
+  .sub { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
+  .card { border: 1px solid var(--border); border-radius: 12px; padding: 12px 13px; margin-bottom: 10px; background: var(--card); }
+  .card.done { border-color: var(--ok); }
+  .card h3 { font-size: 13.5px; font-weight: 500; margin: 0 0 3px; display: flex; gap: 8px; align-items: flex-start; }
+  .card h3 span.n { flex: 0 0 auto; font-size: 11px; color: var(--muted); border: 1px solid var(--border);
+    border-radius: 4px; padding: 0 4px; line-height: 16px; margin-top: 1px; }
+  .card p { margin: 0 0 9px; font-size: 13px; color: var(--muted); }
+  code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px;
+    background: var(--input); border: 1px solid var(--border); border-radius: 6px; padding: 8px;
+    color: var(--fg); word-break: break-all; margin-bottom: 9px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  button { font-family: inherit; font-size: 12.5px; font-weight: 500; border-radius: 6px; padding: 7px 13px;
+    border: 1px solid transparent; cursor: pointer; }
+  .b-open { background: var(--primary); color: #fff; }
+  .b-copy { background: var(--secondary); color: var(--fg); border-color: var(--border); }
+  button:active { opacity: .75; }
+  .chk { display: inline-flex; gap: 5px; align-items: center; font-size: 11.5px; color: var(--muted);
+    margin-left: auto; cursor: pointer; }
+  .chk input { accent-color: var(--ok); margin: 0; width: 16px; height: 16px; }
+  .ok { font-size: 11.5px; color: var(--ok); min-width: 62px; }
+  a.dl { display: flex; justify-content: space-between; gap: 10px; align-items: center;
+    border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; margin-bottom: 8px;
+    text-decoration: none; color: var(--fg); font-size: 13px; }
+  a.dl small { color: var(--muted); font-size: 11.5px; }
+  ol.steps { margin: 0 0 10px; padding-left: 18px; font-size: 13px; color: var(--muted); }
+  ol.steps li { margin-bottom: 5px; }
+  .foot { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 12px; font-size: 12px; color: var(--muted); }
+  code.inl { display: inline; padding: 2px 5px; font-size: 11px; }
 </style>
 </head>
 <body>
-<h1>Intents — pantallas de Ajustes</h1>
-<div class="sub">Toca <b>Abrir</b>. Si no pasa nada, toca <b>Copiar</b> y pega el texto en la barra de direcciones.</div>
-<div class="warn">No cierres esta pestaña. Marca lo probado con ✓ para llevar la cuenta y no repetir.</div>
 
-<div class="bar">
-  <input type="search" id="q" placeholder="Filtrar (cuenta, wifi, apps…)" autocomplete="off">
-  <div id="count"></div>
+<h1>Panel de métodos FRP</h1>
+
+<div class="dev">
+  <span><b>SM-G990B</b> · Galaxy S21 FE 5G</span>
+  <span>Android 15 · SDK 35 · One UI 7</span>
+  <span>Build <b>G990BXXSGHYI1</b></span>
+  <span>lahaina / r9qxeea</span>
 </div>
 
-<main id="list"></main>
+<div class="note">
+  Los enlaces <code class="inl">intent://</code> solo funcionan en Chrome, en el móvil. Si algo abre y se cierra
+  al instante, tira de <b>Recientes</b> (subir y mantener) para volver a la tarea, o toca el enlace dos veces.
+</div>
+
+<h2>1 · Dar a Chrome el permiso de instalar</h2>
+<p class="sub">El orden importa: esto primero, porque sin permiso cualquier APK que descargues se queda sin instalar.</p>
+
+<div class="card" data-id="m1">
+  <h3><span class="n">1.1</span> Permiso directo para Chrome</h3>
+  <p>Salta justo a la pantalla del interruptor de Chrome. Es la que usa el sistema cuando pulsas "Permitir desde esta fuente".</p>
+  <code>intent://package:com.android.chrome#Intent;scheme=package;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m2">
+  <h3><span class="n">1.2</span> Misma pantalla, variante con data</h3>
+  <p>Si la anterior no responde, esta llega al mismo sitio por otra construcción del intent.</p>
+  <code>intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;data=package:com.android.chrome;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m3">
+  <h3><span class="n">1.3</span> Lista general de apps con permiso</h3>
+  <p>Abre el listado completo de "Instalar apps desconocidas". Busca Chrome y actívalo ahí.</p>
+  <code>intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m4">
+  <h3><span class="n">1.4</span> Ficha de Chrome (ruta sin intent)</h3>
+  <p>Descarga cualquier APK para que Chrome genere su notificación de descarga, luego:</p>
+  <ol class="steps">
+    <li>Baja la barra de notificaciones y <b>mantén pulsada</b> la notificación de descarga.</li>
+    <li>Toca el engranaje o la "i" → <b>Información de la app</b>.</li>
+    <li>Busca <b>Instalar apps desconocidas</b> y activa <b>Permitir desde esta fuente</b>.</li>
+  </ol>
+  <p>La ficha de una app es subpantalla de Ajustes y aguanta el cierre; la raíz no.</p>
+  <div class="row"><label class="chk"><input type="checkbox"> hecho</label></div>
+</div>
+
+<div class="card" data-id="m5">
+  <h3><span class="n">1.5</span> Ficha de Chrome por intent</h3>
+  <p>Atajo a la ficha de la app, por si prefieres no depender de la notificación. Desde ahí, mismo paso 3.</p>
+  <code>intent://package:com.android.chrome#Intent;scheme=package;action=android.settings.APPLICATION_DETAILS_SETTINGS;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<h2>2 · Gestores de archivos con permiso ya concedido</h2>
+<p class="sub">Son apps de sistema y varias ya vienen autorizadas: si alguna instala sin pedir nada, te saltas todo el paso 1.</p>
+
+<div class="card" data-id="m6">
+  <h3><span class="n">2.1</span> Mis Archivos (Samsung)</h3>
+  <p>Descarga el APK con Chrome, abre Mis Archivos → Descargas → toca el APK. Si sale "Instalación bloqueada", pulsa <b>Ajustes</b> en el diálogo.</p>
+  <code>intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m7">
+  <h3><span class="n">2.2</span> Files de Google</h3>
+  <p>Mismo procedimiento. Suele venir preinstalado y con permiso propio.</p>
+  <code>intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m8">
+  <h3><span class="n">2.3</span> Galaxy Store</h3>
+  <p>App de sistema, instala sin permisos del usuario. Sirve para verificar que la instalación funciona y para poner Samsung Internet si falta.</p>
+  <code>intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<h2>3 · Descargas</h2>
+<p class="sub">Con el permiso concedido, descarga, abre <code class="inl">chrome://downloads</code> y toca el APK. Si Play Protect avisa, "Instalar de todos modos".</p>
+
+<a class="dl" href="https://frpbypass.romstage.com/activity_launcher-1/" target="_blank" rel="noopener">
+  <span>Activity Launcher <small>· recomendado, lista de actividades</small></span><span>abrir</span>
+</a>
+<a class="dl" href="https://frpbypass.romstage.com/quick-shortcutmaker-apk/" target="_blank" rel="noopener">
+  <span>QuickShortcutMaker <small>· alternativa con buscador</small></span><span>abrir</span>
+</a>
+<a class="dl" href="https://romstage.com/wp-content/uploads/2020/05/QuickShortcutMaker_2.4.0.apk" target="_blank" rel="noopener">
+  <span>QuickShortcutMaker 2.4.0 <small>· APK directo</small></span><span>abrir</span>
+</a>
+
+<div class="card" data-id="m9">
+  <h3><span class="n">3.1</span> Descargas de Chrome</h3>
+  <code>chrome://downloads</code>
+  <div class="row">
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<h2>4 · Tras instalar: meter la cuenta</h2>
+<p class="sub">En Activity Launcher filtra por <code class="inl">com.google.android.gms</code> y abre la actividad de inicio de sesión (<code class="inl">MinuteMaidActivity</code> / "Sign in"). En QuickShortcutMaker, busca <code class="inl">SetupWizard</code> → "Google Account Login".</p>
+
+<div class="card" data-id="m10">
+  <h3><span class="n">4.1</span> Añadir cuenta</h3>
+  <p>Pantalla de cuentas del sistema. Si la raíz de Ajustes ya se sostiene, es la vía más limpia.</p>
+  <code>intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m11">
+  <h3><span class="n">4.2</span> Login de cuenta Google</h3>
+  <p>Lanza el activity de login de la cuenta directamente.</p>
+  <code>intent://com.google.android.gsf.login.LoginActivity/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m12">
+  <h3><span class="n">4.3</span> Play Store</h3>
+  <p>Si Play Store arranca y deja iniciar sesión, el FRP cae por esa puerta sin herramientas.</p>
+  <code>intent://com.android.vending/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<h2>5 · Si Ajustes se sigue cerrando</h2>
+<p class="sub">Subpantallas que en One UI 7 suelen sobrevivir mejor que la raíz.</p>
+
+<div class="card" data-id="m13">
+  <h3><span class="n">5.1</span> Bloqueo de pantalla (GMS)</h3>
+  <p>Fija un PIN mediante Play Services. No quita el FRP solo, pero desbloquea los flujos que exigen bloqueo configurado.</p>
+  <code>intent://com.google.android.gms/#Intent;scheme=promote_smartlock_scheme;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m14">
+  <h3><span class="n">5.2</span> Ajustes de aplicaciones</h3>
+  <p>Lista de apps del sistema. Si entra, desde ahí llegas a Chrome y a su permiso.</p>
+  <code>intent://#Intent;action=android.settings.APPLICATION_SETTINGS;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m15">
+  <h3><span class="n">5.3</span> Smart Switch</h3>
+  <p>Asistente propio que no pasa por Ajustes.</p>
+  <code>intent://com.sec.android.easyMover/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="card" data-id="m16">
+  <h3><span class="n">5.4</span> Raíz de Ajustes</h3>
+  <p>La que se cierra. Vale para reintentar con Recientes o en doble toque.</p>
+  <code>intent://com.android.settings/#Intent;scheme=android-app;end</code>
+  <div class="row">
+    <button class="b-open">Abrir</button>
+    <button class="b-copy">Copiar</button>
+    <span class="ok"></span>
+    <label class="chk"><input type="checkbox"> hecho</label>
+  </div>
+</div>
+
+<div class="foot">
+  Truco contra el cierre: toca el enlace y, en el instante en que aparezca Ajustes, sube y mantén pulsado para
+  abrir Recientes y vuelve a entrar en la tarea. La raíz muere porque el SetupWizard reclama el foco; una tarea
+  ya en Recientes se reanuda sin relanzarse.<br><br>
+  Si la cuenta que metas no es la original, el teléfono no queda libre del todo: hay que entrar por
+  Ajustes → Cuentas con la cuenta correcta. El progreso de las casillas se guarda solo.
+</div>
 
 <script>
-const GROUPS = [
-["Cuentas y Google", [
- ["Añadir cuenta (Ajustes)", "com.android.settings/.accounts.AddAccountSettings"],
- ["Elegir tipo de cuenta", "com.android.settings/.accounts.ChooseAccountActivity"],
- ["Panel de cuentas", "com.android.settings/.Settings$AccountDashboardActivity"],
- ["Sincronización de cuentas", "com.android.settings/.Settings$AccountSyncSettings"],
- ["Login Google (MinuteMaid)", "com.google.android.gms/.auth.uiflows.minutemaid.MinuteMaidActivity"],
- ["Login Google (alt)", "com.google.android.gms/.auth.login.MinuteMaidActivity"],
- ["Añadir cuenta Google", "com.google.android.gms/.auth.uiflows.addaccount.MinuteMaidActivity"],
- ["Flujo Google común", "com.google.android.gms/.auth.uiflows.common.MinuteMaidActivity"],
- ["Play Store", "com.android.vending/.AssetBrowserActivity"],
- ["Play Store — login", "com.android.vending/.ui.SignInActivity"],
- ["Gmail", "com.google.android.gm/.ConversationListActivityGmail"],
- ["App de Google", "com.google.android.googlequicksearchbox/com.google.android.launcher.GEL"],
- ["Cuenta Samsung", "com.samsung.android.samsungaccount/com.samsung.android.samsungaccount.ui.SignInActivity"],
- ["Ajustes de Samsung account", "com.samsung.android.settings/.Settings$SamsungAccountActivity"]
-]],
-["Paneles principales", [
- ["Settings", "com.android.settings/.Settings"],
- ["TopLevelSettings", "com.android.settings/.TopLevelSettings"],
- ["SettingsHomepageActivity", "com.android.settings/.homepage.SettingsHomepageActivity"],
- ["SettingsDashboardActivity", "com.android.settings/.homepage.SettingsDashboardActivity"],
- ["SystemDashboard", "com.android.settings/.Settings$SystemDashboardActivity"],
- ["HomeDashboard", "com.android.settings/.Settings$HomeDashboardActivity"],
- ["Settings (pkg Samsung)", "com.samsung.android.settings/.Settings"]
-]],
-["Información y sistema", [
- ["DeviceInfoSettings", "com.android.settings/.Settings$DeviceInfoSettings"],
- ["AboutDeviceActivity", "com.android.settings/.Settings$AboutDeviceActivity"],
- ["BuildInfo", "com.android.settings/.deviceinfo.BuildInfo"],
- ["DevelopmentSettingsDashboard", "com.android.settings/.Settings$DevelopmentSettingsDashboardActivity"],
- ["DevelopmentSettings", "com.android.settings/.Settings$DevelopmentSettings"],
- ["TestingSettings", "com.android.settings/.Settings$TestingSettingsActivity"],
- ["Privacidad", "com.android.settings/.Settings$PrivacySettingsActivity"],
- ["Copia de seguridad", "com.android.settings/.Settings$BackupSettingsActivity"],
- ["Restaurar copia", "com.android.settings/.Settings$BackupRestoreSettingsActivity"],
- ["Idioma", "com.android.settings/.Settings$LocaleSettingsActivity"],
- ["Fecha y hora", "com.android.settings/.Settings$DateTimeSettingsActivity"],
- ["Usuarios", "com.android.settings/.Settings$UserSettingsActivity"],
- ["Almacenamiento", "com.android.settings/.Settings$StorageDashboardActivity"],
- ["Memoria", "com.android.settings/.Settings$MemorySettingsActivity"],
- ["Uso de batería", "com.android.settings/.Settings$PowerUsageSummaryActivity"],
- ["Ahorro de batería", "com.android.settings/.Settings$BatterySaverSettingsActivity"],
- ["Apps de alto consumo", "com.android.settings/.Settings$HighPowerApplicationsActivity"],
- ["Servicios en ejecución", "com.android.settings/.Settings$RunningServicesActivity"],
- ["APN", "com.android.settings/.Settings$ApnSettingsActivity"],
- ["Estado de SIM", "com.android.settings/.Settings$SimStatusActivity"],
- ["Info de radio", "com.android.settings/.Settings$RadioInfoActivity"],
- ["Bloqueo de SIM", "com.android.settings/.Settings$IccLockSettingsActivity"],
- ["Zona horaria", "com.android.settings/.Settings$ZonePicker"]
-]],
-["Aplicaciones", [
- ["Gestionar aplicaciones", "com.android.settings/.applications.ManageApplications"],
- ["Apps y notificaciones", "com.android.settings/.Settings$AppAndNotificationDashboardActivity"],
- ["Apps predeterminadas", "com.android.settings/.Settings$DefaultAppSettings"],
- ["Gestionar apps por defecto", "com.android.settings/.Settings$ManageDefaultAppsSettingsActivity"],
- ["Acceso especial", "com.android.settings/.Settings$SpecialAccessSettingsActivity"],
- ["Superposición", "com.android.settings/.Settings$DrawOverlaySettingsActivity"],
- ["Acceso de uso", "com.android.settings/.Settings$UsageAccessSettingsActivity"],
- ["Acceso a notificaciones", "com.android.settings/.Settings$NotificationAccessSettingsActivity"],
- ["Modificar ajustes del sistema", "com.android.settings/.Settings$WriteSettingsActivity"],
- ["Detalle de app", "com.android.settings/.Settings$InstalledAppDetails"]
-]],
-["Red", [
- ["Red e Internet", "com.android.settings/.Settings$NetworkDashboardActivity"],
- ["Wi-Fi", "com.android.settings/.Settings$WifiSettingsActivity"],
- ["Configurar Wi-Fi", "com.android.settings/.Settings$ConfigureWifiSettingsActivity"],
- ["Wi-Fi avanzado", "com.android.settings/.Settings$AdvancedWifiSettingsActivity"],
- ["Redes guardadas", "com.android.settings/.Settings$SavedAccessPoints"],
- ["Wi-Fi Display", "com.android.settings/.Settings$WifiDisplaySettingsActivity"],
- ["Llamadas Wi-Fi", "com.android.settings/.Settings$WifiCallingSettingsActivity"],
- ["Bluetooth", "com.android.settings/.Settings$BluetoothSettingsActivity"],
- ["Anclaje y zona Wi-Fi", "com.android.settings/.Settings$TetherSettingsActivity"],
- ["VPN", "com.android.settings/.Settings$VpnSettingsActivity"],
- ["Red móvil", "com.android.settings/.Settings$MobileNetworkActivity"],
- ["Uso de datos", "com.android.settings/.Settings$DataUsageSummaryActivity"],
- ["Itinerancia", "com.android.settings/.Settings$RoamingSettingsActivity"],
- ["NFC", "com.android.settings/.Settings$NfcSettingsActivity"],
- ["Modo avión", "com.android.settings/.Settings$AirplaneModeSettingsActivity"]
-]],
-["Pantalla, sonido y notificaciones", [
- ["Pantalla", "com.android.settings/.Settings$DisplaySettingsActivity"],
- ["Notificaciones", "com.android.settings/.Settings$NotificationSettingsActivity"],
- ["Configurar notificaciones", "com.android.settings/.Settings$ConfigureNotificationSettings"],
- ["Sonido", "com.android.settings/.Settings$SoundSettingsActivity"],
- ["No molestar", "com.android.settings/.Settings$ZenModeSettingsActivity"],
- ["Modo nocturno", "com.android.settings/.Settings$NightDisplaySettingsActivity"],
- ["Modo de color", "com.android.settings/.Settings$ColorModeSettingsActivity"],
- ["Navegación por gestos", "com.android.settings/.Settings$GestureNavigationSettingsActivity"],
- ["Salida de texto a voz", "com.android.settings/.Settings$TextToSpeechSettingsActivity"]
-]],
-["Seguridad y bloqueo", [
- ["Panel de seguridad", "com.android.settings/.Settings$SecurityDashboardActivity"],
- ["SecuritySettings", "com.android.settings/.Settings$SecuritySettings"],
- ["Bloqueo de pantalla", "com.android.settings/.Settings$ScreenLockSettings"],
- ["Elegir bloqueo", "com.android.settings/.Settings$ChooseLockGenericActivity"],
- ["Cambiar contraseña", "com.android.settings/.Settings$ChangeLockScreenPassword"],
- ["Huella", "com.android.settings/.Settings$FingerprintSettingsActivity"],
- ["Huella (alt)", "com.android.settings/biometrics.fingerprint.FingerprintSettings"],
- ["Rostro", "com.android.settings/.Settings$FaceSettingsActivity"],
- ["Smart Lock", "com.android.settings/.Settings$SmartUnlockSettingsActivity"],
- ["Credenciales de confianza", "com.android.settings/.Settings$TrustedCredentialsSettingsActivity"],
- ["Administradores de dispositivo", "com.android.settings/.Settings$DeviceAdminSettingsActivity"],
- ["CryptKeeper", "com.android.settings/.Settings$CryptKeeperSettingsActivity"]
-]],
-["Accesibilidad y entrada", [
- ["Accesibilidad", "com.android.settings/.Settings$AccessibilitySettingsActivity"],
- ["Corrección de color", "com.android.settings/.Settings$AccessibilityDaltonizerSettingsActivity"],
- ["Ampliación", "com.android.settings/.Settings$MagnificationSettingsActivity"],
- ["Subtítulos", "com.android.settings/.Settings$CaptioningSettingsActivity"],
- ["Entrada y teclados", "com.android.settings/.Settings$InputMethodAndSubtypeEnablerActivity"],
- ["Teclado físico", "com.android.settings/.Settings$PhysicalKeyboardSettingsActivity"],
- ["Diseño de teclado", "com.android.settings/.Settings$KeyboardLayoutPickerActivity"],
- ["Ajustes de teclado", "com.android.settings/.Settings$KeyboardSettingsActivity"],
- ["Entrada/salida de voz", "com.android.settings/.Settings$VoiceInputOutputSettings"],
- ["App de asistencia", "com.android.settings/.Settings$ManageAssistActivity"]
-]],
-["Otros", [
- ["Setup Wizard", "com.sec.android.app.SecSetupWizard/.SecSetupWizardActivity"],
- ["Smart Switch", "com.sec.android.easyMover/.ui.activity.SmartSwitchActivity"],
- ["Calculadora Samsung", "com.sec.android.app.popupcalculator/.Calculator"],
- ["Cámara", "com.sec.android.app.camera/.Camera"],
- ["Galería", "com.sec.android.gallery3d/.app.GalleryActivity"],
- ["Contactos", "com.samsung.android.app.contacts/.contactslist.ContactsListActivity"],
- ["Reloj", "com.sec.android.app.clockpackage/.ClockPackage"],
- ["Ajustes Android (alt)", "com.google.android.settings/.Settings"]
-]]
-];
+(function () {
+  var KEY = 'frp_s21fe_progress_v1';
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { saved = {}; }
 
-const KEY = "frp_progress_v1";
-let done = new Set(JSON.parse(localStorage.getItem(KEY) || "[]"));
-const list = document.getElementById("list");
-const count = document.getElementById("count");
+  function persist() {
+    var out = {};
+    document.querySelectorAll('.card[data-id]').forEach(function (c) {
+      var cb = c.querySelector('input[type=checkbox]');
+      if (cb && cb.checked) out[c.dataset.id] = 1;
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
+  }
 
-function paint(){
-  const total = document.querySelectorAll(".row").length;
-  count.textContent = done.size + " / " + total + " probados";
-}
-
-function row(label, cmp){
-  const d = document.createElement("div");
-  d.className = "row" + (done.has(cmp) ? " done" : "");
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  const l = document.createElement("span");
-  l.className = "lbl"; l.textContent = label;
-  const c = document.createElement("span");
-  c.className = "cmp"; c.textContent = cmp;
-  meta.append(l, c);
-
-  const a = document.createElement("a");
-  a.className = "open";
-  a.href = "intent:#Intent;component=" + cmp + ";end";
-  a.target = "_top";
-  a.textContent = "Abrir";
-  a.addEventListener("click", () => {
-    if(!done.has(cmp)){ done.add(cmp); localStorage.setItem(KEY, JSON.stringify([...done])); d.classList.add("done"); paint(); }
-  });
-
-  const cp = document.createElement("button");
-  cp.className = "cp"; cp.textContent = "Copiar";
-  cp.addEventListener("click", async () => {
-    const txt = "intent:#Intent;component=" + cmp + ";end";
-    try { await navigator.clipboard.writeText(txt); }
-    catch(e){ const t = document.createElement("textarea"); t.value = txt; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
-    cp.textContent = "✓";
-    setTimeout(() => cp.textContent = "Copiar", 1200);
-  });
-
-  const dn = document.createElement("button");
-  dn.className = "dn"; dn.textContent = done.has(cmp) ? "✓" : "○";
-  dn.addEventListener("click", () => {
-    if(done.has(cmp)){ done.delete(cmp); dn.textContent = "○"; d.classList.remove("done"); }
-    else { done.add(cmp); dn.textContent = "✓"; d.classList.add("done"); }
-    localStorage.setItem(KEY, JSON.stringify([...done])); paint();
-  });
-
-  d.append(meta, a, cp, dn);
-  return d;
-}
-
-GROUPS.forEach(([name, items]) => {
-  const h = document.createElement("h2"); h.textContent = name;
-  list.appendChild(h);
-  items.forEach(([label, cmp]) => list.appendChild(row(label, cmp)));
-});
-
-document.getElementById("q").addEventListener("input", e => {
-  const v = e.target.value.toLowerCase().trim();
-  document.querySelectorAll("h2").forEach(h => {
-    let shown = 0, n = h.nextElementSibling;
-    while(n && n.classList && n.classList.contains("row")){
-      const hit = !v || n.textContent.toLowerCase().includes(v);
-      n.style.display = hit ? "" : "none";
-      if(hit) shown++;
-      n = n.nextElementSibling;
+  document.querySelectorAll('.card[data-id]').forEach(function (card) {
+    var cb = card.querySelector('input[type=checkbox]');
+    if (cb) {
+      if (saved[card.dataset.id]) { cb.checked = true; card.classList.add('done'); }
+      cb.addEventListener('change', function () {
+        card.classList.toggle('done', cb.checked);
+        persist();
+      });
     }
-    h.style.display = shown ? "" : "none";
+
+    var code = card.querySelector('code');
+    var ok = card.querySelector('.ok');
+
+    var open = card.querySelector('.b-open');
+    if (open && code) {
+      open.addEventListener('click', function () {
+        var u = code.textContent.trim();
+        if (ok) { ok.textContent = 'lanzando…'; setTimeout(function () { ok.textContent = ''; }, 2500); }
+        try { window.location.href = u; }
+        catch (e) { window.open(u, '_blank'); }
+      });
+    }
+
+    var copy = card.querySelector('.b-copy');
+    if (copy && code) {
+      copy.addEventListener('click', function () {
+        var t = code.textContent.trim();
+        var done = function () {
+          copy.textContent = 'copiado';
+          if (ok) ok.textContent = 'pega en la barra';
+          setTimeout(function () { copy.textContent = 'Copiar'; if (ok) ok.textContent = ''; }, 2600);
+        };
+        var fail = function () {
+          var ta = document.createElement('textarea');
+          ta.value = t;
+          ta.style.position = 'absolute';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); done(); } catch (e) { copy.textContent = 'selecciona a mano'; }
+          document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(t).then(done).catch(fail);
+        } else { fail(); }
+      });
+    }
   });
-});
-
-document.getElementById("count").addEventListener("dblclick", () => {
-  if(confirm("¿Reiniciar marcas?")){ done.clear(); localStorage.removeItem(KEY); document.querySelectorAll(".row").forEach(r => r.classList.remove("done")); document.querySelectorAll(".dn").forEach(b => b.textContent = "○"); paint(); }
-});
-
-paint();
+})();
 </script>
 </body>
 </html>
