@@ -3,76 +3,74 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FRP Launcher - G990B</title>
+<title>FRP Launcher v2</title>
 <style>
-  body{background:#0d0d0f;color:#e8e8ea;font:16px/1.45 system-ui,sans-serif;margin:0;padding:14px 14px 40px}
-  h1{font-size:19px;margin:4px 0 14px}
-  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#8b8b96;margin:26px 0 8px;border-bottom:1px solid #26262b;padding-bottom:6px}
-  a.btn{display:block;padding:15px 14px;margin:8px 0;background:#1b1b20;border:1px solid #2e2e35;border-radius:10px;color:#e8e8ea;text-decoration:none;font-weight:600}
-  a.btn:active{background:#2b6cff;border-color:#2b6cff}
-  a.btn small{display:block;font-weight:400;color:#9a9aa4;font-size:12px;margin-top:3px;word-break:break-all}
-  .warn{background:#241a08;border:1px solid #5a4110;border-radius:10px;padding:12px;font-size:14px;color:#f0c674;margin:12px 0}
-  textarea{width:100%;box-sizing:border-box;background:#141418;color:#9fe0a0;border:1px solid #2e2e35;border-radius:10px;padding:10px;font:13px/1.4 monospace;min-height:150px}
-  input,button{font:15px inherit}
-  input{width:100%;box-sizing:border-box;padding:11px;background:#141418;color:#fff;border:1px solid #2e2e35;border-radius:9px}
-  button{width:100%;padding:12px;margin-top:8px;background:#2b6cff;color:#fff;border:0;border-radius:9px;font-weight:700}
+ body{background:#0d0d0f;color:#e8e8ea;font:16px/1.45 system-ui,sans-serif;margin:0;padding:14px 14px 40px}
+ h1{font-size:19px;margin:4px 0 14px}
+ h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#8b8b96;margin:26px 0 8px;border-bottom:1px solid #26262b;padding-bottom:6px}
+ a.btn{display:block;padding:15px 14px;margin:8px 0;background:#1b1b20;border:1px solid #2e2e35;border-radius:10px;color:#e8e8ea;text-decoration:none;font-weight:600}
+ a.btn:active{background:#2b6cff;border-color:#2b6cff}
+ a.btn small{display:block;font-weight:400;color:#9a9aa4;font-size:12px;margin-top:3px;word-break:break-all}
+ .warn{background:#241a08;border:1px solid #5a4110;border-radius:10px;padding:12px;font-size:14px;color:#f0c674;margin:12px 0}
+ .ok{background:#0c2416;border:1px solid #14532d;border-radius:10px;padding:12px;font-size:14px;color:#86efac;margin:12px 0}
+ textarea{width:100%;box-sizing:border-box;background:#141418;color:#9fe0a0;border:1px solid #2e2e35;border-radius:10px;padding:10px;font:13px/1.4 monospace;min-height:170px}
+ input,button{font:15px inherit}
+ input{width:100%;box-sizing:border-box;padding:11px;background:#141418;color:#fff;border:1px solid #2e2e35;border-radius:9px}
+ button{width:100%;padding:12px;margin-top:8px;background:#2b6cff;color:#fff;border:0;border-radius:9px;font-weight:700}
 </style>
 </head>
 <body>
-<h1>FRP Launcher — SM-G990B / One UI 7</h1>
-<div class="warn">Si un botón no hace nada, el componente no existe en tu firmware. Prueba el siguiente. Los que llevan <b>#Intent</b> son intents; los demás abren apps por paquete.</div>
+<h1>FRP Launcher v2 — SM-G990B</h1>
+<div class="ok">Funciona confirmado: <b>Mis archivos</b>. Todo lo demás aquí va con variantes y flags para esquivar el cierre de Ajustes.</div>
 
-<h2>1. USB / ADB (prioridad)</h2>
-<a class="btn" href="intent://com.sec.android.app.servicemodeapp/#Intent;scheme=promote_USBSettings_scheme;end">USB Settings (modo servicio)<small>servicemodeapp · promote_USBSettings_scheme</small></a>
-<a class="btn" href="intent://com.sec.android.app.modemui.activities.usb.settings/#Intent;scheme=android-app;end">USB config / ADB<small>com.sec.android.app.modemui</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$DevelopmentSettingsDashboardActivity;end">Opciones de desarrollador (directo)<small>DevelopmentSettingsDashboardActivity</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.development.DevelopmentSettingsDashboardActivity;end">Opciones de desarrollador (variante)<small>development.DevelopmentSettingsDashboardActivity</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$UsbSettingsActivity;end">Ajustes de USB<small>UsbSettingsActivity</small></a>
+<h2>1. Ajustes con flags / acciones</h2>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings;launchFlags=0x10000000;end">Ajustes + FLAG_NEW_TASK<small>.Settings · 0x10000000</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings;launchFlags=0x14000000;end">Ajustes + NEW_TASK|CLEAR_TASK<small>0x14000000</small></a>
+<a class="btn" href="intent://#Intent;action=android.settings.SETTINGS;end">Action SETTINGS<small>android.settings.SETTINGS</small></a>
+<a class="btn" href="intent://#Intent;action=android.settings.APPLICATION_DEVELOPMENT_SETTINGS;end">Action DEVELOPMENT_SETTINGS<small>por acción, no componente</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$ConnectedDeviceDashboardActivity;end">Dispositivos conectados<small>aquí vive el USB en One UI 7</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$ConnectedDeviceDashboardActivity;launchFlags=0x10000000;end">Dispositivos conectados + flag<small>variante</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$DevelopmentSettingsDashboardActivity;launchFlags=0x10000000;end">Desarrollo + flag<small>variante</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$UsbSettingsActivity;launchFlags=0x10000000;end">Ajustes USB + flag<small>variante</small></a>
 
-<h2>2. Ajustes generales</h2>
-<a class="btn" href="intent://com.android.settings/#Intent;scheme=android-app;end">Abrir Ajustes (paquete)<small>com.android.settings</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings;end">Abrir Ajustes (componente)<small>.Settings</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.homepage.SettingsHomepageActivity;end">Ajustes homepage<small>SettingsHomepageActivity</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.SecSettings;end">SecSettings<small>.SecSettings</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$AccountDashboardActivity;end">Cuentas<small>AccountDashboardActivity</small></a>
-<a class="btn" href="intent://#Intent;component=com.google.android.gms/.app.settings.GoogleSettingsActivity;end">Ajustes de Google<small>GoogleSettingsActivity</small></a>
+<h2>2. Instalar sin permiso (acciones exactas)</h2>
+<a class="btn" href="intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;S.package=com.android.chrome;end">Orígenes desconocidos → Chrome<small>action MANAGE_UNKNOWN_APP_SOURCES</small></a>
+<a class="btn" href="intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;S.package=com.sec.android.app.myfiles;end">Orígenes desconocidos → Mis archivos<small>permite instalar desde Mis archivos</small></a>
+<a class="btn" href="intent://#Intent;action=android.settings.MANAGE_SPECIAL_ACCESS;end">MANAGE_SPECIAL_ACCESS<small>acceso especial</small></a>
 
-<h2>3. Permiso "instalar apps desconocidas"</h2>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.InstalledAppDetails;package=com.android.chrome;end">Info de app: Chrome<small>InstalledAppDetails + package=com.android.chrome</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.AppInfoActivity;package=com.android.chrome;end">Info de app: Chrome (alt)<small>AppInfoActivity + package</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.ManageExternalSourcesActivity;end">Lista "Instalar apps desconocidas"<small>ManageExternalSourcesActivity</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.SpecialAccessSettings;end">Acceso especial<small>SpecialAccessSettings</small></a>
-<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.ManageApplications;end">Todas las apps<small>ManageApplications</small></a>
+<h2>3. Galaxy Store (vía principal ahora)</h2>
+<a class="btn" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">Abrir Galaxy Store<small>instala sin permiso de orígenes</small></a>
+<a class="btn" href="https://galaxy.store/setting">Ajustes ocultos de Android (Galaxy Store)<small>galaxy.store/setting</small></a>
+<a class="btn" href="https://galaxystore.samsung.com/detail/org.aospstudio.files">Files Shortcut (Galaxy Store)<small>abre accesos directos a actividades</small></a>
+<a class="btn" href="https://galaxystore.samsung.com/detail/com.rrivenllc.shieldx">Alliance Shield (Galaxy Store)<small>el clásico de romstage</small></a>
+<a class="btn" href="intent://#Intent;action=android.intent.action.VIEW;data=https://galaxystore.samsung.com/detail/org.aospstudio.files;end">Abrir ficha vía intent<small>si el link no engancha</small></a>
 
-<h2>4. Apps que sirven de puente</h2>
-<a class="btn" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">Galaxy Store<small>instala sin permiso de orígenes desconocidos</small></a>
-<a class="btn" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">Mis archivos<small>com.sec.android.app.myfiles</small></a>
-<a class="btn" href="intent://com.google.android.documentsui/#Intent;scheme=android-app;end">Documentos (AOSP)<small>documentsui</small></a>
-<a class="btn" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">Documentos (alt)<small>com.android.documentsui</small></a>
-<a class="btn" href="intent://com.google.android.packageinstaller/#Intent;scheme=android-app;end">Instalador de paquetes<small>packageinstaller</small></a>
-<a class="btn" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">Lanzador / Inicio<small>com.sec.android.app.launcher</small></a>
-<a class="btn" href="intent://com.sec.android.easymover/#Intent;scheme=android-app;end">Smart Switch<small>com.sec.android.easymover</small></a>
-<a class="btn" href="intent://com.samsung.android.smartswitchassistant/#Intent;scheme=android-app;end">Smart Switch Assistant<small>proceso activo</small></a>
-<a class="btn" href="intent://com.google.android.tts/#Intent;scheme=android-app;end">Ajustes de TTS<small>sirve para salir del setup</small></a>
-<a class="btn" href="intent://com.google.android.gsf.login.LoginActivity/#Intent;scheme=android-app;end">Login de cuenta Google<small>gsf.login</small></a>
-<a class="btn" href="intent://com.google.android.gms/#Intent;scheme=promote_smartlock_scheme;end">Smart Lock<small>promote_smartlock_scheme</small></a>
-<a class="btn" href="tel:*#0*#">Modo test *#0*#<small>marcador</small></a>
+<h2>4. Login Samsung / Google</h2>
+<a class="btn" href="intent://com.samsung.android.samsungpass/#Intent;scheme=android-app;end">Samsung Pass<small>proceso activo, sirve para login</small></a>
+<a class="btn" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">Cuenta Samsung desde Galaxy Store<small>icono de perfil</small></a>
+<a class="btn" href="intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end">Añadir cuenta<small>ADD_ACCOUNT_SETTINGS</small></a>
 
-<h2>5. Intent manual</h2>
-<input id="i" placeholder="intent://#Intent;component=...;end">
+<h2>5. Puentes ya funcionales</h2>
+<a class="btn" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">Mis archivos<small>confirmado</small></a>
+<a class="btn" href="intent://com.android.chrome/#Intent;scheme=android-app;end">Chrome<small>confirmado</small></a>
+<a class="btn" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">Lanzador<small>para cortina de notificaciones</small></a>
+<a class="btn" href="intent://com.sec.android.easymover/#Intent;scheme=android-app;end">Smart Switch<small>necesita USB ya en MTP</small></a>
+
+<h2>6. Intent manual</h2>
+<input id="i" placeholder="intent://#Intent;...;end">
 <button onclick="location.href=document.getElementById('i').value">Ejecutar</button>
 
-<h2>6. Comandos ADB (una vez activo)</h2>
+<h2>7. Notas ADB / Odin</h2>
 <textarea readonly>
-adb devices
-adb shell pm list packages | grep -i setup
-adb shell settings put secure user_setup_complete 1
-adb shell settings put global device_provisioned 1
-adb shell pm disable-user --user 0 com.sec.android.app.SecSetupWizard
-adb shell pm disable-user --user 0 com.google.android.setupwizard
-adb shell am start -n com.android.settings/.Settings
-adb install -r archivo.apk
-adb shell am start -n com.android.settings/.applications.ManageExternalSourcesActivity
+DOWNLOAD MODE (sin Ajustes):
+  apagar -> Vol Abajo + Power, conectar USB -> Vol Arriba
+
+ADB (si algún día arranca):
+  adb shell am start -n com.android.settings/.Settings
+  adb shell am start -a android.settings.MANAGE_UNKNOWN_APP_SOURCES -d package:com.android.chrome
+  adb install -r archivo.apk
+  adb shell settings put secure user_setup_complete 1
+  adb shell pm disable-user --user 0 com.sec.android.app.SecSetupWizard
 </textarea>
 </body>
 </html>
