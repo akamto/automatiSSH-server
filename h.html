@@ -2,360 +2,77 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panel FRP · S21 FE</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FRP Launcher - G990B</title>
 <style>
-  :root {
-    --bg: #0f1115; --fg: #e7e9ee; --muted: #9aa1ad; --card: #161a21;
-    --border: #262c36; --primary: #3b82f6; --secondary: #1d222b;
-    --ok: #22c55e; --input: #11151b;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; padding: 18px 16px 40px; background: var(--bg); color: var(--fg);
-    font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.5;
-    max-width: 720px; margin-inline: auto;
-  }
-  .dev { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted);
-    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
-  .dev b { font-weight: 500; color: var(--fg); }
-  .note { border-left: 3px solid var(--primary); background: var(--secondary); border-radius: 0 8px 8px 0;
-    padding: 10px 12px; font-size: 13px; margin-bottom: 18px; }
-  h1 { font-size: 18px; font-weight: 500; margin: 0 0 14px; }
-  h2 { font-size: 15px; font-weight: 500; margin: 24px 0 4px; }
-  .sub { font-size: 12.5px; color: var(--muted); margin: 0 0 10px; }
-  .card { border: 1px solid var(--border); border-radius: 12px; padding: 12px 13px; margin-bottom: 10px; background: var(--card); }
-  .card.done { border-color: var(--ok); }
-  .card h3 { font-size: 13.5px; font-weight: 500; margin: 0 0 3px; display: flex; gap: 8px; align-items: flex-start; }
-  .card h3 span.n { flex: 0 0 auto; font-size: 11px; color: var(--muted); border: 1px solid var(--border);
-    border-radius: 4px; padding: 0 4px; line-height: 16px; margin-top: 1px; }
-  .card p { margin: 0 0 9px; font-size: 13px; color: var(--muted); }
-  code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px;
-    background: var(--input); border: 1px solid var(--border); border-radius: 6px; padding: 8px;
-    color: var(--fg); word-break: break-all; margin-bottom: 9px; }
-  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  button { font-family: inherit; font-size: 12.5px; font-weight: 500; border-radius: 6px; padding: 7px 13px;
-    border: 1px solid transparent; cursor: pointer; }
-  .b-open { background: var(--primary); color: #fff; }
-  .b-copy { background: var(--secondary); color: var(--fg); border-color: var(--border); }
-  button:active { opacity: .75; }
-  .chk { display: inline-flex; gap: 5px; align-items: center; font-size: 11.5px; color: var(--muted);
-    margin-left: auto; cursor: pointer; }
-  .chk input { accent-color: var(--ok); margin: 0; width: 16px; height: 16px; }
-  .ok { font-size: 11.5px; color: var(--ok); min-width: 62px; }
-  a.dl { display: flex; justify-content: space-between; gap: 10px; align-items: center;
-    border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; margin-bottom: 8px;
-    text-decoration: none; color: var(--fg); font-size: 13px; }
-  a.dl small { color: var(--muted); font-size: 11.5px; }
-  ol.steps { margin: 0 0 10px; padding-left: 18px; font-size: 13px; color: var(--muted); }
-  ol.steps li { margin-bottom: 5px; }
-  .foot { margin-top: 22px; border-top: 1px solid var(--border); padding-top: 12px; font-size: 12px; color: var(--muted); }
-  code.inl { display: inline; padding: 2px 5px; font-size: 11px; }
+  body{background:#0d0d0f;color:#e8e8ea;font:16px/1.45 system-ui,sans-serif;margin:0;padding:14px 14px 40px}
+  h1{font-size:19px;margin:4px 0 14px}
+  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#8b8b96;margin:26px 0 8px;border-bottom:1px solid #26262b;padding-bottom:6px}
+  a.btn{display:block;padding:15px 14px;margin:8px 0;background:#1b1b20;border:1px solid #2e2e35;border-radius:10px;color:#e8e8ea;text-decoration:none;font-weight:600}
+  a.btn:active{background:#2b6cff;border-color:#2b6cff}
+  a.btn small{display:block;font-weight:400;color:#9a9aa4;font-size:12px;margin-top:3px;word-break:break-all}
+  .warn{background:#241a08;border:1px solid #5a4110;border-radius:10px;padding:12px;font-size:14px;color:#f0c674;margin:12px 0}
+  textarea{width:100%;box-sizing:border-box;background:#141418;color:#9fe0a0;border:1px solid #2e2e35;border-radius:10px;padding:10px;font:13px/1.4 monospace;min-height:150px}
+  input,button{font:15px inherit}
+  input{width:100%;box-sizing:border-box;padding:11px;background:#141418;color:#fff;border:1px solid #2e2e35;border-radius:9px}
+  button{width:100%;padding:12px;margin-top:8px;background:#2b6cff;color:#fff;border:0;border-radius:9px;font-weight:700}
 </style>
 </head>
 <body>
+<h1>FRP Launcher — SM-G990B / One UI 7</h1>
+<div class="warn">Si un botón no hace nada, el componente no existe en tu firmware. Prueba el siguiente. Los que llevan <b>#Intent</b> son intents; los demás abren apps por paquete.</div>
 
-<h1>Panel de métodos FRP</h1>
+<h2>1. USB / ADB (prioridad)</h2>
+<a class="btn" href="intent://com.sec.android.app.servicemodeapp/#Intent;scheme=promote_USBSettings_scheme;end">USB Settings (modo servicio)<small>servicemodeapp · promote_USBSettings_scheme</small></a>
+<a class="btn" href="intent://com.sec.android.app.modemui.activities.usb.settings/#Intent;scheme=android-app;end">USB config / ADB<small>com.sec.android.app.modemui</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$DevelopmentSettingsDashboardActivity;end">Opciones de desarrollador (directo)<small>DevelopmentSettingsDashboardActivity</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.development.DevelopmentSettingsDashboardActivity;end">Opciones de desarrollador (variante)<small>development.DevelopmentSettingsDashboardActivity</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$UsbSettingsActivity;end">Ajustes de USB<small>UsbSettingsActivity</small></a>
 
-<div class="dev">
-  <span><b>SM-G990B</b> · Galaxy S21 FE 5G</span>
-  <span>Android 15 · SDK 35 · One UI 7</span>
-  <span>Build <b>G990BXXSGHYI1</b></span>
-  <span>lahaina / r9qxeea</span>
-</div>
+<h2>2. Ajustes generales</h2>
+<a class="btn" href="intent://com.android.settings/#Intent;scheme=android-app;end">Abrir Ajustes (paquete)<small>com.android.settings</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings;end">Abrir Ajustes (componente)<small>.Settings</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.homepage.SettingsHomepageActivity;end">Ajustes homepage<small>SettingsHomepageActivity</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.SecSettings;end">SecSettings<small>.SecSettings</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.Settings$AccountDashboardActivity;end">Cuentas<small>AccountDashboardActivity</small></a>
+<a class="btn" href="intent://#Intent;component=com.google.android.gms/.app.settings.GoogleSettingsActivity;end">Ajustes de Google<small>GoogleSettingsActivity</small></a>
 
-<div class="note">
-  Los enlaces <code class="inl">intent://</code> solo funcionan en Chrome, en el móvil. Si algo abre y se cierra
-  al instante, tira de <b>Recientes</b> (subir y mantener) para volver a la tarea, o toca el enlace dos veces.
-</div>
+<h2>3. Permiso "instalar apps desconocidas"</h2>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.InstalledAppDetails;package=com.android.chrome;end">Info de app: Chrome<small>InstalledAppDetails + package=com.android.chrome</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.AppInfoActivity;package=com.android.chrome;end">Info de app: Chrome (alt)<small>AppInfoActivity + package</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.ManageExternalSourcesActivity;end">Lista "Instalar apps desconocidas"<small>ManageExternalSourcesActivity</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.SpecialAccessSettings;end">Acceso especial<small>SpecialAccessSettings</small></a>
+<a class="btn" href="intent://#Intent;component=com.android.settings/.applications.ManageApplications;end">Todas las apps<small>ManageApplications</small></a>
 
-<h2>1 · Dar a Chrome el permiso de instalar</h2>
-<p class="sub">El orden importa: esto primero, porque sin permiso cualquier APK que descargues se queda sin instalar.</p>
+<h2>4. Apps que sirven de puente</h2>
+<a class="btn" href="intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end">Galaxy Store<small>instala sin permiso de orígenes desconocidos</small></a>
+<a class="btn" href="intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end">Mis archivos<small>com.sec.android.app.myfiles</small></a>
+<a class="btn" href="intent://com.google.android.documentsui/#Intent;scheme=android-app;end">Documentos (AOSP)<small>documentsui</small></a>
+<a class="btn" href="intent://com.android.documentsui/#Intent;scheme=android-app;end">Documentos (alt)<small>com.android.documentsui</small></a>
+<a class="btn" href="intent://com.google.android.packageinstaller/#Intent;scheme=android-app;end">Instalador de paquetes<small>packageinstaller</small></a>
+<a class="btn" href="intent://com.sec.android.app.launcher/#Intent;scheme=android-app;end">Lanzador / Inicio<small>com.sec.android.app.launcher</small></a>
+<a class="btn" href="intent://com.sec.android.easymover/#Intent;scheme=android-app;end">Smart Switch<small>com.sec.android.easymover</small></a>
+<a class="btn" href="intent://com.samsung.android.smartswitchassistant/#Intent;scheme=android-app;end">Smart Switch Assistant<small>proceso activo</small></a>
+<a class="btn" href="intent://com.google.android.tts/#Intent;scheme=android-app;end">Ajustes de TTS<small>sirve para salir del setup</small></a>
+<a class="btn" href="intent://com.google.android.gsf.login.LoginActivity/#Intent;scheme=android-app;end">Login de cuenta Google<small>gsf.login</small></a>
+<a class="btn" href="intent://com.google.android.gms/#Intent;scheme=promote_smartlock_scheme;end">Smart Lock<small>promote_smartlock_scheme</small></a>
+<a class="btn" href="tel:*#0*#">Modo test *#0*#<small>marcador</small></a>
 
-<div class="card" data-id="m1">
-  <h3><span class="n">1.1</span> Permiso directo para Chrome</h3>
-  <p>Salta justo a la pantalla del interruptor de Chrome. Es la que usa el sistema cuando pulsas "Permitir desde esta fuente".</p>
-  <code>intent://package:com.android.chrome#Intent;scheme=package;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
+<h2>5. Intent manual</h2>
+<input id="i" placeholder="intent://#Intent;component=...;end">
+<button onclick="location.href=document.getElementById('i').value">Ejecutar</button>
 
-<div class="card" data-id="m2">
-  <h3><span class="n">1.2</span> Misma pantalla, variante con data</h3>
-  <p>Si la anterior no responde, esta llega al mismo sitio por otra construcción del intent.</p>
-  <code>intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;data=package:com.android.chrome;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m3">
-  <h3><span class="n">1.3</span> Lista general de apps con permiso</h3>
-  <p>Abre el listado completo de "Instalar apps desconocidas". Busca Chrome y actívalo ahí.</p>
-  <code>intent://#Intent;action=android.settings.MANAGE_UNKNOWN_APP_SOURCES;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m4">
-  <h3><span class="n">1.4</span> Ficha de Chrome (ruta sin intent)</h3>
-  <p>Descarga cualquier APK para que Chrome genere su notificación de descarga, luego:</p>
-  <ol class="steps">
-    <li>Baja la barra de notificaciones y <b>mantén pulsada</b> la notificación de descarga.</li>
-    <li>Toca el engranaje o la "i" → <b>Información de la app</b>.</li>
-    <li>Busca <b>Instalar apps desconocidas</b> y activa <b>Permitir desde esta fuente</b>.</li>
-  </ol>
-  <p>La ficha de una app es subpantalla de Ajustes y aguanta el cierre; la raíz no.</p>
-  <div class="row"><label class="chk"><input type="checkbox"> hecho</label></div>
-</div>
-
-<div class="card" data-id="m5">
-  <h3><span class="n">1.5</span> Ficha de Chrome por intent</h3>
-  <p>Atajo a la ficha de la app, por si prefieres no depender de la notificación. Desde ahí, mismo paso 3.</p>
-  <code>intent://package:com.android.chrome#Intent;scheme=package;action=android.settings.APPLICATION_DETAILS_SETTINGS;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<h2>2 · Gestores de archivos con permiso ya concedido</h2>
-<p class="sub">Son apps de sistema y varias ya vienen autorizadas: si alguna instala sin pedir nada, te saltas todo el paso 1.</p>
-
-<div class="card" data-id="m6">
-  <h3><span class="n">2.1</span> Mis Archivos (Samsung)</h3>
-  <p>Descarga el APK con Chrome, abre Mis Archivos → Descargas → toca el APK. Si sale "Instalación bloqueada", pulsa <b>Ajustes</b> en el diálogo.</p>
-  <code>intent://com.sec.android.app.myfiles/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m7">
-  <h3><span class="n">2.2</span> Files de Google</h3>
-  <p>Mismo procedimiento. Suele venir preinstalado y con permiso propio.</p>
-  <code>intent://com.google.android.apps.nbu.files/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m8">
-  <h3><span class="n">2.3</span> Galaxy Store</h3>
-  <p>App de sistema, instala sin permisos del usuario. Sirve para verificar que la instalación funciona y para poner Samsung Internet si falta.</p>
-  <code>intent://com.sec.android.app.samsungapps/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<h2>3 · Descargas</h2>
-<p class="sub">Con el permiso concedido, descarga, abre <code class="inl">chrome://downloads</code> y toca el APK. Si Play Protect avisa, "Instalar de todos modos".</p>
-
-<a class="dl" href="https://frpbypass.romstage.com/activity_launcher-1/" target="_blank" rel="noopener">
-  <span>Activity Launcher <small>· recomendado, lista de actividades</small></span><span>abrir</span>
-</a>
-<a class="dl" href="https://frpbypass.romstage.com/quick-shortcutmaker-apk/" target="_blank" rel="noopener">
-  <span>QuickShortcutMaker <small>· alternativa con buscador</small></span><span>abrir</span>
-</a>
-<a class="dl" href="https://romstage.com/wp-content/uploads/2020/05/QuickShortcutMaker_2.4.0.apk" target="_blank" rel="noopener">
-  <span>QuickShortcutMaker 2.4.0 <small>· APK directo</small></span><span>abrir</span>
-</a>
-
-<div class="card" data-id="m9">
-  <h3><span class="n">3.1</span> Descargas de Chrome</h3>
-  <code>chrome://downloads</code>
-  <div class="row">
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<h2>4 · Tras instalar: meter la cuenta</h2>
-<p class="sub">En Activity Launcher filtra por <code class="inl">com.google.android.gms</code> y abre la actividad de inicio de sesión (<code class="inl">MinuteMaidActivity</code> / "Sign in"). En QuickShortcutMaker, busca <code class="inl">SetupWizard</code> → "Google Account Login".</p>
-
-<div class="card" data-id="m10">
-  <h3><span class="n">4.1</span> Añadir cuenta</h3>
-  <p>Pantalla de cuentas del sistema. Si la raíz de Ajustes ya se sostiene, es la vía más limpia.</p>
-  <code>intent://#Intent;action=android.settings.ADD_ACCOUNT_SETTINGS;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m11">
-  <h3><span class="n">4.2</span> Login de cuenta Google</h3>
-  <p>Lanza el activity de login de la cuenta directamente.</p>
-  <code>intent://com.google.android.gsf.login.LoginActivity/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m12">
-  <h3><span class="n">4.3</span> Play Store</h3>
-  <p>Si Play Store arranca y deja iniciar sesión, el FRP cae por esa puerta sin herramientas.</p>
-  <code>intent://com.android.vending/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<h2>5 · Si Ajustes se sigue cerrando</h2>
-<p class="sub">Subpantallas que en One UI 7 suelen sobrevivir mejor que la raíz.</p>
-
-<div class="card" data-id="m13">
-  <h3><span class="n">5.1</span> Bloqueo de pantalla (GMS)</h3>
-  <p>Fija un PIN mediante Play Services. No quita el FRP solo, pero desbloquea los flujos que exigen bloqueo configurado.</p>
-  <code>intent://com.google.android.gms/#Intent;scheme=promote_smartlock_scheme;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m14">
-  <h3><span class="n">5.2</span> Ajustes de aplicaciones</h3>
-  <p>Lista de apps del sistema. Si entra, desde ahí llegas a Chrome y a su permiso.</p>
-  <code>intent://#Intent;action=android.settings.APPLICATION_SETTINGS;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m15">
-  <h3><span class="n">5.3</span> Smart Switch</h3>
-  <p>Asistente propio que no pasa por Ajustes.</p>
-  <code>intent://com.sec.android.easyMover/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="card" data-id="m16">
-  <h3><span class="n">5.4</span> Raíz de Ajustes</h3>
-  <p>La que se cierra. Vale para reintentar con Recientes o en doble toque.</p>
-  <code>intent://com.android.settings/#Intent;scheme=android-app;end</code>
-  <div class="row">
-    <button class="b-open">Abrir</button>
-    <button class="b-copy">Copiar</button>
-    <span class="ok"></span>
-    <label class="chk"><input type="checkbox"> hecho</label>
-  </div>
-</div>
-
-<div class="foot">
-  Truco contra el cierre: toca el enlace y, en el instante en que aparezca Ajustes, sube y mantén pulsado para
-  abrir Recientes y vuelve a entrar en la tarea. La raíz muere porque el SetupWizard reclama el foco; una tarea
-  ya en Recientes se reanuda sin relanzarse.<br><br>
-  Si la cuenta que metas no es la original, el teléfono no queda libre del todo: hay que entrar por
-  Ajustes → Cuentas con la cuenta correcta. El progreso de las casillas se guarda solo.
-</div>
-
-<script>
-(function () {
-  var KEY = 'frp_s21fe_progress_v1';
-  var saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { saved = {}; }
-
-  function persist() {
-    var out = {};
-    document.querySelectorAll('.card[data-id]').forEach(function (c) {
-      var cb = c.querySelector('input[type=checkbox]');
-      if (cb && cb.checked) out[c.dataset.id] = 1;
-    });
-    try { localStorage.setItem(KEY, JSON.stringify(out)); } catch (e) {}
-  }
-
-  document.querySelectorAll('.card[data-id]').forEach(function (card) {
-    var cb = card.querySelector('input[type=checkbox]');
-    if (cb) {
-      if (saved[card.dataset.id]) { cb.checked = true; card.classList.add('done'); }
-      cb.addEventListener('change', function () {
-        card.classList.toggle('done', cb.checked);
-        persist();
-      });
-    }
-
-    var code = card.querySelector('code');
-    var ok = card.querySelector('.ok');
-
-    var open = card.querySelector('.b-open');
-    if (open && code) {
-      open.addEventListener('click', function () {
-        var u = code.textContent.trim();
-        if (ok) { ok.textContent = 'lanzando…'; setTimeout(function () { ok.textContent = ''; }, 2500); }
-        try { window.location.href = u; }
-        catch (e) { window.open(u, '_blank'); }
-      });
-    }
-
-    var copy = card.querySelector('.b-copy');
-    if (copy && code) {
-      copy.addEventListener('click', function () {
-        var t = code.textContent.trim();
-        var done = function () {
-          copy.textContent = 'copiado';
-          if (ok) ok.textContent = 'pega en la barra';
-          setTimeout(function () { copy.textContent = 'Copiar'; if (ok) ok.textContent = ''; }, 2600);
-        };
-        var fail = function () {
-          var ta = document.createElement('textarea');
-          ta.value = t;
-          ta.style.position = 'absolute';
-          ta.style.opacity = '0';
-          document.body.appendChild(ta);
-          ta.select();
-          try { document.execCommand('copy'); done(); } catch (e) { copy.textContent = 'selecciona a mano'; }
-          document.body.removeChild(ta);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(t).then(done).catch(fail);
-        } else { fail(); }
-      });
-    }
-  });
-})();
-</script>
+<h2>6. Comandos ADB (una vez activo)</h2>
+<textarea readonly>
+adb devices
+adb shell pm list packages | grep -i setup
+adb shell settings put secure user_setup_complete 1
+adb shell settings put global device_provisioned 1
+adb shell pm disable-user --user 0 com.sec.android.app.SecSetupWizard
+adb shell pm disable-user --user 0 com.google.android.setupwizard
+adb shell am start -n com.android.settings/.Settings
+adb install -r archivo.apk
+adb shell am start -n com.android.settings/.applications.ManageExternalSourcesActivity
+</textarea>
 </body>
 </html>
